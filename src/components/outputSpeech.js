@@ -8,7 +8,7 @@ export const outputSpeech = (text) => {
 
 
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  speech.rate = isMobile ? 1 : 2;
+  speech.rate = isMobile ? 1.3 : 2;
 
   window.speechSynthesis.speak(speech);
 };
