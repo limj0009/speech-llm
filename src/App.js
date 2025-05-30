@@ -2,6 +2,7 @@ import './App.css';
 import useSpeech from "./hooks/useSpeech";
 import Response from "./components/response";
 import { cancelSpeech } from "./components/cancelSpeech";
+import { unlockSpeech } from "./components/unlockSpeech";
 
 function App() {
   const OPENAI_API_KEY = process.env.REACT_APP_API_KEY;
@@ -18,14 +19,18 @@ function App() {
       <div className="button-container">
         <button
           className={`control-button ${isListening ? "stop" : "start"}`}
-          onClick={() => setIsListening(prev => !prev)}
+          onClick={() => {
+            unlockSpeech();
+            setIsListening(prev => !prev);
+          }}
         >
           {isListening ? "Recording" : "Start"}
         </button>
 
         <button
           className="control-button mute"
-          onClick={handleMuteButton}
+          onClick={() => {unlockSpeech(); 
+            handleMuteButton}}
         >
           Mute
         </button>
