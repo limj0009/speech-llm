@@ -29,8 +29,10 @@ function App() {
 
         <button
           className="control-button mute"
-          onClick={() => {unlockSpeech(); 
-            handleMuteButton}}
+          onClick={() => {
+            unlockSpeech(); 
+            handleMuteButton();
+          }}
         >
           Mute
         </button>
