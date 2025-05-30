@@ -1,28 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { generateResponse } from "../api/api";
+import { outputSpeech } from "./outputSpeech";
 
 const Response = ({ transcript, apiKey }) => {
-  const [response, setResponse] = useState("");
-  const [loading, setLoading] = useState(false);
-
   useEffect(() => {
     if (transcript.trim() === "") {
-      setResponse("");
       return;
     }
 
-    setLoading(true);
-    generateResponse(transcript, apiKey).then(res => setResponse(res)).catch(err => {
-        console.error(err);
-        setResponse("Failed to get response.");
-      }).finally(() => setLoading(false));
+  generateResponse(transcript, apiKey)
+    .then(res => {
+      outputSpeech(res);
+    })
+    .catch(err => {
+      console.error("LLM error:", err);
+    });
+    
   }, [transcript, apiKey]);
 
-  return (
-    <p>
-      <strong>Response:</strong> {loading ? "Loading..." : response}
-    </p>
-  );
+  return null;
 };
 
 export default Response;

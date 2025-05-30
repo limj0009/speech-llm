@@ -8,7 +8,7 @@ export const generateResponse = async (transcript, apiKey) => {
     body: JSON.stringify({
       model: "gpt-4.1-nano",
       messages: [
-        { role: "system", content: "Answer in one to two sentences."},
+        { role: "system", content: "Answer in one or two sentences."},
         { role: "user", content: transcript },
       ],
       temperature: 0.7,
