@@ -4,8 +4,11 @@ export const outputSpeech = (text) => {
   }
   const speech = new SpeechSynthesisUtterance(text);
   speech.lang = 'en-US'; 
-  speech.rate = 2;
   speech.pitch = 1;
 
+
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  speech.rate = isMobile ? 1.2 : 2;
+  
   window.speechSynthesis.speak(speech);
 };
