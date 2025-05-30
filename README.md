@@ -1,6 +1,6 @@
 # Speech AI Assistant 
 
-A mobile-friendly speech interface app implements LLM and utilizes the web speech api to listen for questions and read back the responses. Used for mock interview purposes.
+A mobile-friendly speech interface application built using React.JS. It implements LLM and utilizes the web speech api to listen for questions and read back the responses. Used for mock interview purposes.
 
 ## Running Locally
 1. After cloning the project, `npm install`
