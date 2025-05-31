@@ -18,11 +18,8 @@ const useSpeechWhisper = (apiKey) => {
         };
 
         mediaRecorder.onstop = async () => {
-             alert("Recording stopped, preparing to transcribe...");
         const speech = new Blob(audioRef.current, { type: 'audio/mp4' });
-        alert("Blob size: " + speech.size + " bytes");
         const text = await transcribeSpeech(speech, apiKey);
-        alert("Transcription complete!");
         setTranscript(text);
         audioRef.current = [];
         };
@@ -31,7 +28,7 @@ const useSpeechWhisper = (apiKey) => {
         mediaRecorder.start();
     } catch (err) {
         console.error("ERROR", err);
-        alert("SPEECH TO TEXT ERROR");
+        alert("startRecording ERROR");
     }
     
   };
