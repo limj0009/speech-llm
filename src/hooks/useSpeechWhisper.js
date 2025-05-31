@@ -5,7 +5,7 @@ const useSpeechWhisper = (apiKey) => {
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState("");
   const mediaRecorderRef = useRef(null);
-  const audioChunksRef = useRef([]);
+  const audioRef = useRef([]);
 
   const startRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -13,15 +13,15 @@ const useSpeechWhisper = (apiKey) => {
 
     mediaRecorder.ondataavailable = (e) => {
       if (e.data.size > 0) {
-        audioChunksRef.current.push(e.data);
+        audioRef.current.push(e.data);
       }
     };
 
     mediaRecorder.onstop = async () => {
-      const speech = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+      const speech = new Blob(audioRef.current, { type: 'audio/webm' });
       const text = await transcribeSpeech(speech, apiKey);
       setTranscript(text);
-      audioChunksRef.current = [];
+      audioRef.current = [];
     };
 
     mediaRecorderRef.current = mediaRecorder;
@@ -46,7 +46,8 @@ const useSpeechWhisper = (apiKey) => {
   return {
     isListening,
     toggleListening,
-    transcript
+    transcript,
+    setTranscript
   };
 };
 
