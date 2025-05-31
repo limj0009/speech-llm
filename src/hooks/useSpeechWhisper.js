@@ -8,24 +8,30 @@ const useSpeechWhisper = (apiKey) => {
   const audioRef = useRef([]);
 
   const startRecording = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const mediaRecorder = new MediaRecorder(stream);
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const mediaRecorder = new MediaRecorder(stream);
 
-    mediaRecorder.ondataavailable = (e) => {
-      if (e.data.size > 0) {
-        audioRef.current.push(e.data);
-      }
-    };
+        mediaRecorder.ondataavailable = (e) => {
+        if (e.data.size > 0) {
+            audioRef.current.push(e.data);
+        }
+        };
 
-    mediaRecorder.onstop = async () => {
-      const speech = new Blob(audioRef.current, { type: 'audio/webm' });
-      const text = await transcribeSpeech(speech, apiKey);
-      setTranscript(text);
-      audioRef.current = [];
-    };
+        mediaRecorder.onstop = async () => {
+        const speech = new Blob(audioRef.current, { type: 'audio/mp4' });
+        const text = await transcribeSpeech(speech, apiKey);
+        setTranscript(text);
+        audioRef.current = [];
+        };
 
-    mediaRecorderRef.current = mediaRecorder;
-    mediaRecorder.start();
+        mediaRecorderRef.current = mediaRecorder;
+        mediaRecorder.start();
+    } catch (err) {
+        console.error("ERROR", err);
+        alert("SPEECH TO TEXT ERROR");
+    }
+    
   };
 
   const stopRecording = () => {
