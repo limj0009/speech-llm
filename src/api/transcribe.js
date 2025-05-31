@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const transcribeSpeech = async (speech, apiKey) => {
   const formData = new FormData();
-  formData.append("file", speech, "speech.webm");
+  formData.append("file", speech, "audio.aac");
   formData.append("model", "whisper-1");
   formData.append("language", "en");
 
@@ -12,8 +12,7 @@ export const transcribeSpeech = async (speech, apiKey) => {
       formData,
       {
         headers: {
-          "Authorization": `Bearer ${apiKey}`,
-          "Content-Type": "multipart/form-data",
+          "Authorization": `Bearer ${apiKey}`
         },
       }
     );
