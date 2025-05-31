@@ -9,6 +9,7 @@ const useSpeechWhisper = (apiKey) => {
 
   const startRecording = async () => {
     try {
+        alert("START");
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         const mediaRecorder = new MediaRecorder(stream);
 
@@ -19,7 +20,7 @@ const useSpeechWhisper = (apiKey) => {
         };
 
         mediaRecorder.onstop = async () => {
-        const speech = new Blob(audioRef.current, { type: 'audio/mp4' });
+        const speech = new Blob(audioRef.current, { type: 'audio/webm' });
         const text = await transcribeSpeech(speech, apiKey);
         setTranscript(text);
         audioRef.current = [];
