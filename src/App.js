@@ -1,12 +1,12 @@
 import './App.css';
-import useSpeech from "./hooks/useSpeech";
+import useSpeechWhisper from "./hooks/useSpeechWhisper";
 import Response from "./components/response";
 import { cancelSpeech } from "./components/cancelSpeech";
 import { unlockSpeech } from "./components/unlockSpeech";
 
 function App() {
   const OPENAI_API_KEY = process.env.REACT_APP_API_KEY;
-  const { isListening, setIsListening, transcript } = useSpeech();
+  const { isListening, toggleListening, transcript } = useSpeechWhisper(OPENAI_API_KEY);
   
   const handleMuteButton = () => {
     cancelSpeech();
@@ -21,7 +21,7 @@ function App() {
           className={`control-button ${isListening ? "stop" : "start"}`}
           onClick={() => {
             unlockSpeech();
-            setIsListening(prev => !prev);
+            toggleListening();
           }}
         >
           {isListening ? "Recording" : "Start"}

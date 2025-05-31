@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { generateResponse } from "../api/api";
 import { outputSpeech } from "./outputSpeech";
 
