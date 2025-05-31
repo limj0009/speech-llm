@@ -19,7 +19,7 @@ const useSpeechWhisper = (apiKey) => {
 
         mediaRecorder.onstop = async () => {
              alert("Recording stopped, preparing to transcribe...");
-        const speech = new Blob(audioRef.current, { type: 'audio/aac' });
+        const speech = new Blob(audioRef.current, { type: 'audio/mp4' });
         alert("Blob size: " + speech.size + " bytes");
         const text = await transcribeSpeech(speech, apiKey);
         alert("Transcription complete!");
