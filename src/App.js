@@ -2,7 +2,6 @@ import './App.css';
 import { useState, useRef } from "react";
 import useSpeechWhisper from "./hooks/useSpeechWhisper";
 import { cancelSpeech } from "./components/cancelSpeech";
-import { unlockSpeech } from "./components/unlockSpeech";
 import { generateResponse } from "./api/api";
 import { outputSpeech } from "./components/outputSpeech";
 
