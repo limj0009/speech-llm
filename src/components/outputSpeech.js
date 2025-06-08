@@ -5,7 +5,7 @@ export const outputSpeech = (text) => {
   const speech = new SpeechSynthesisUtterance(text);
   speech.lang = 'en-US'; 
   speech.pitch = 1;
-  speech.rate = 3;
+  speech.rate = 2.5;
 
   window.speechSynthesis.speak(speech);
 };

@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { transcribeSpeech } from "../api/transcribe";
 
-const useSpeech = (apiKey, onTranscriptReady) => {
+const useSpeech = (apiKey, handleUserAnswer) => {
   const [isListening, setIsListening] = useState(false);
   const mediaRecorderRef = useRef(null);
   const audioRef = useRef([]);
@@ -19,7 +19,7 @@ const useSpeech = (apiKey, onTranscriptReady) => {
         const speech = new Blob(audioRef.current, { type: 'audio/mp4' });
         const text = await transcribeSpeech(speech, apiKey);
         audioRef.current = [];
-        onTranscriptReady(text);
+        handleUserAnswer(text);
       };
       mediaRecorderRef.current = mediaRecorder;
       mediaRecorder.start();

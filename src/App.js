@@ -2,63 +2,39 @@ import './App.css';
 import { useState, useRef } from "react";
 import useSpeech from "./hooks/useSpeech";
 import { cancelSpeech } from "./components/cancelSpeech";
-import { generateResponse } from "./api/api";
 import { outputSpeech } from "./components/outputSpeech";
+import { startInterviewProcess } from "./components/interview";
+import { generateResponse } from "./api/api";
 
 function App() {
   const OPENAI_API_KEY = process.env.REACT_APP_API_KEY;
   const [interviewStarted, setInterviewStarted] = useState(false);
-  const [messages, setMessages] = useState([]);
-  const [displayText, setDisplayText] = useState("Say something...");
+  const [chatLog, setChatLog] = useState([]);
+  const [displayText, setDisplayText] = useState("");
+  const topicRef = useRef();
   const { isListening, toggleListening } = useSpeech(OPENAI_API_KEY, handleUserAnswer);
-  const topicInputRef = useRef();
-
-  function handleMuteButton() {
-    cancelSpeech();
-  }
 
   async function startInterview() {
-    const chosenTopic = topicInputRef.current.value.trim();
-    if (!chosenTopic) return alert("Please enter a topic!");
-
-    const initialMessages = [
-      {
-        role: "system",
-        content: "You are a technical interviewer. Ask one question at a time about the topic. After each answer, give brief feedback, then ask the next question. Wait for the applicant's answer before continuing."
-      },
-      {
-        role: "user",
-        content: `Please interview me on: ${chosenTopic}`
-      }
-    ];
-
-    setInterviewStarted(true);
-    setMessages(initialMessages);
-
-    try {
-      const firstQuestion = await generateResponse(initialMessages, OPENAI_API_KEY);
-      const updated = [...initialMessages, { role: "assistant", content: firstQuestion }];
-      setMessages(updated);
-      setDisplayText(firstQuestion);
-      outputSpeech(firstQuestion);
-    } catch (e) {
-      setDisplayText("Error starting interview.");
-      console.error(e);
+    const topic = topicRef.current?.value;
+    const success = await startInterviewProcess(topic, OPENAI_API_KEY, setChatLog, setDisplayText);
+    if (success) {
+      setInterviewStarted(true);
+    } else {
+        setDisplayText("Failed to start the interview.");
     }
   }
 
-  async function handleUserAnswer(userAnswerText) {
-    const updatedMessages = [...messages, { role: "user", content: userAnswerText }];
-
+  async function handleUserAnswer(userAnswer) {
+    const updatedChatLog = [...chatLog, { role: "user", content: userAnswer }];
     try {
-      const reply = await generateResponse(updatedMessages, OPENAI_API_KEY);
-      const newMessages = [...updatedMessages, { role: "assistant", content: reply }];
-      setMessages(newMessages);
-      setDisplayText(reply);
-      outputSpeech(reply);
-    } catch (e) {
-      setDisplayText("Error responding.");
-      console.error(e);
+      const response = await generateResponse(updatedChatLog, OPENAI_API_KEY);
+      const newChatLog = [...updatedChatLog, { role: "assistant", content: response }];
+      setChatLog(newChatLog);
+      setDisplayText(response);
+      outputSpeech(response);
+    } catch (err) {
+      console.error(err);
+      setDisplayText("Something went wrong with our interviewer...");
     }
   }
 
@@ -69,7 +45,7 @@ function App() {
           <h2 className="transcript">Hello! What topic would you like the interview to be based on?</h2>
           <input
             type="text"
-            ref={topicInputRef}
+            ref={topicRef}
             placeholder="e.g. Frontend, Java, Spring"
             style={{ fontSize: "18px", padding: "10px", borderRadius: "8px", width: "80%", maxWidth: "300px", marginBottom: "20px" }}
           />
@@ -88,8 +64,7 @@ function App() {
             >
               {isListening ? "Recording" : "Start"}
             </button>
-
-            <button className="control-button mute" onClick={handleMuteButton}>
+            <button className="control-button mute" onClick={cancelSpeech}>
               Mute
             </button>
           </div>
