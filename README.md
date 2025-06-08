@@ -1,5 +1,7 @@
 # Speech AI Assistant 
 
+![App Screenshot](src/index.PNG)
+
 A speech interface web application built using React.JS. It implements an LLM and utilizes the Whisper API from OPENAI via axios for  speech-to-text transcription, while using the web speech API for its text-to-speech output. Used for mock interview purposes.
 
 ## Running Locally

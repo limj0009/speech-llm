@@ -42,14 +42,15 @@ function App() {
     <div className="App">
       {!interviewStarted ? (
         <>
+          <h1 className="header">Mock Interviewer</h1>
+          <h3 className="subheader">Powered by gpt-4.1-nano and Whisper</h3>
           <h2 className="transcript">Hello! What topic would you like the interview to be based on?</h2>
           <input
             type="text"
             ref={topicRef}
             placeholder="e.g. Frontend, Java, Spring"
-            style={{ fontSize: "18px", padding: "10px", borderRadius: "8px", width: "80%", maxWidth: "300px", marginBottom: "20px" }}
           />
-          <button className="control-button start" onClick={startInterview}>Start Interview</button>
+          <button className="control-button startinterview" onClick={startInterview}>Start Interview</button>
         </>
       ) : (
         <>
