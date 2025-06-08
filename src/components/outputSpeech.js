@@ -5,10 +5,7 @@ export const outputSpeech = (text) => {
   const speech = new SpeechSynthesisUtterance(text);
   speech.lang = 'en-US'; 
   speech.pitch = 1;
-
-
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  speech.rate = isMobile ? 1.15 : 2;
+  speech.rate = 3;
 
   window.speechSynthesis.speak(speech);
 };
