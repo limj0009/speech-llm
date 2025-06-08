@@ -1,6 +1,6 @@
 import './App.css';
 import { useState, useRef } from "react";
-import useSpeechWhisper from "./hooks/useSpeechWhisper";
+import useSpeech from "./hooks/useSpeech";
 import { cancelSpeech } from "./components/cancelSpeech";
 import { generateResponse } from "./api/api";
 import { outputSpeech } from "./components/outputSpeech";
@@ -10,7 +10,7 @@ function App() {
   const [interviewStarted, setInterviewStarted] = useState(false);
   const [messages, setMessages] = useState([]);
   const [displayText, setDisplayText] = useState("Say something...");
-  const { isListening, toggleListening } = useSpeechWhisper(OPENAI_API_KEY, handleUserAnswer);
+  const { isListening, toggleListening } = useSpeech(OPENAI_API_KEY, handleUserAnswer);
   const topicInputRef = useRef();
 
   function handleMuteButton() {
