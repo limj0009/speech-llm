@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { transcribeSpeech } from "../api/transcribe";
+
 const useSpeechWhisper = (apiKey, onTranscriptReady) => {
   const [isListening, setIsListening] = useState(false);
   const mediaRecorderRef = useRef(null);
