@@ -24,7 +24,7 @@ const useSpeech = (apiKey, onTranscriptReady) => {
       mediaRecorderRef.current = mediaRecorder;
       mediaRecorder.start();
     } catch (err) {
-      console.error("ERROR", err);
+      console.error(err);
       alert("There is an issue with the recording");
     }
   };

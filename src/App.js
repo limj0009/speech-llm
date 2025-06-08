@@ -66,11 +66,11 @@ function App() {
     <div className="App">
       {!interviewStarted ? (
         <>
-          <h2 className="transcript">What topic do you want to be interviewed on?</h2>
+          <h2 className="transcript">Hello! What topic would you like the interview to be based on?</h2>
           <input
             type="text"
             ref={topicInputRef}
-            placeholder="e.g., Java, Spring Boot, SQL"
+            placeholder="e.g. Frontend, Java, Spring"
             style={{ fontSize: "18px", padding: "10px", borderRadius: "8px", width: "80%", maxWidth: "300px", marginBottom: "20px" }}
           />
           <button className="control-button start" onClick={startInterview}>Start Interview</button>
